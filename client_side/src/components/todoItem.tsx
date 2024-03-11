@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CSS from "csstype";
 
-interface todoItem {
+export interface item {
   checked: boolean;
   description: string;
 }
@@ -29,7 +29,7 @@ const descriptionStyle: CSS.Properties = {
   fontSize: "24px",
 };
 
-const TodoItem = (props: todoItem) => {
+const TodoItem = (props: item) => {
   const [checked, setChecked] = useState<boolean>(props.checked);
   const [description, setDescription] = useState<string>(props.description);
 

@@ -1,5 +1,7 @@
 import TodoItem from "./todoItem";
 import CSS from "csstype";
+import { item } from "./todoItem";
+import { useState } from "react";
 
 const listStyle: CSS.Properties = {
   border: "2px solid black",
@@ -36,22 +38,40 @@ const addItemStyle: CSS.Properties = {
   border: "2px solid black",
 };
 
-const TodoList = () => {
-  return (
-    <div style={listStyle}>
-      <div style={listHeaderStyle}>
-        <h1>To do list</h1>
-      </div>
-      <div style={listBodyStyle}>
-        <TodoItem checked={false} description="First Item" />
-        <TodoItem checked={true} description="Second Item" />
-        <TodoItem checked={false} description="Third Item" />
-      </div>
-      <div style={listFooterStyle}>
-        <button style={addItemStyle}> + add item </button>
-      </div>
-    </div>
-  );
+export interface todoListProps {
+    items: item[]
+}
+
+const TodoList = (props: todoListProps) => {
+    const [items, setItems] = useState(props.items);
+
+    const onAddItemClick = () => {
+        setItems([
+            ...items,
+            {
+                checked: false,
+                description: "",
+            }
+        ])
+    }
+
+    return (
+        <div style={listStyle}>
+        <div style={listHeaderStyle}>
+            <h1>To do list</h1>
+        </div>
+        <div style={listBodyStyle}>
+            {
+                items.map((item: item) => {
+                    return <TodoItem checked={item.checked} description={item.description} />
+                })
+            }
+        </div>
+        <div style={listFooterStyle}>
+            <button style={addItemStyle} onClick={onAddItemClick}> + add item </button>
+        </div>
+        </div>
+    );
 };
 
 export default TodoList;

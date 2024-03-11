@@ -1,6 +1,6 @@
+import { item } from "./components/todoItem";
 import TodoList from "./components/todoList";
 import CSS from "csstype";
-
 const containeStyle: CSS.Properties = {
   background: "gray",
   display: "flex",
@@ -13,9 +13,14 @@ const containeStyle: CSS.Properties = {
 };
 
 const App = () => {
+
+  let items: item[] = []
+
+  items.push({checked: false, description:"Example task"})
+
   return (
     <div style={containeStyle}>
-      <TodoList />
+      <TodoList items={items} />
     </div>
   );
 };
