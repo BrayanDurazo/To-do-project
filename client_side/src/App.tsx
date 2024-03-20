@@ -1,6 +1,17 @@
-import { item } from "./components/todoItem";
 import TodoList from "./components/todoList";
 import CSS from "csstype";
+import { useQuery, gql } from '@apollo/client';
+
+const GET_ITEMS = gql`
+    query GET_ITEMS {
+        items @rest(type: "item", endpoint: "v1", path: "items/") {
+            id
+            checked
+            description
+        }
+    }
+`;
+
 const containeStyle: CSS.Properties = {
   background: "gray",
   display: "flex",
@@ -13,14 +24,15 @@ const containeStyle: CSS.Properties = {
 };
 
 const App = () => {
+  const {loading, data} = useQuery(GET_ITEMS);
 
-  let items: item[] = []
-
-  items.push({checked: false, description:"Example task"})
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div style={containeStyle}>
-      <TodoList items={items} />
+      <TodoList items={data.items} />
     </div>
   );
 };
