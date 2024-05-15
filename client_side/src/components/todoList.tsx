@@ -64,6 +64,7 @@ const TodoList = (props: todoListProps) => {
     });
 
     const onAddItemClick = () => {
+      addItem()
       if (loading) {
         return <div>Loading...</div>
       }
