@@ -2,6 +2,16 @@ import TodoItem from "./todoItem";
 import CSS from "csstype";
 import { item } from "./todoItem";
 import { useState } from "react";
+import { useMutation, gql } from '@apollo/client';
+
+const ADD_ITEM = gql`
+  mutation ADD_ITEM {
+    item(input: $input) @rest(type: "item", path: "items/", endpoint: "v1", method: "POST") {
+      description
+      checked
+    }
+  }
+`
 
 const listStyle: CSS.Properties = {
   border: "2px solid black",
@@ -44,15 +54,26 @@ export interface todoListProps {
 
 const TodoList = (props: todoListProps) => {
     const [items, setItems] = useState(props.items);
+    const [addItem, { loading }] = useMutation(ADD_ITEM, {
+      variables: {
+        input: {
+          description: "",
+          checked: false,
+        }
+      }
+    });
 
     const onAddItemClick = () => {
-        setItems([
-            ...items,
-            {
-                checked: false,
-                description: "",
-            }
-        ])
+      if (loading) {
+        return <div>Loading...</div>
+      }
+      setItems([
+          ...items,
+          {
+              checked: false,
+              description: "",
+          }
+      ])
     }
 
     return (
