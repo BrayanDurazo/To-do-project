@@ -71,8 +71,8 @@ const TodoList = (props: todoListProps) => {
       setItems([
           ...items,
           {
-              checked: false,
-              description: "",
+            description: "",
+            checked: false,
           }
       ])
     }
