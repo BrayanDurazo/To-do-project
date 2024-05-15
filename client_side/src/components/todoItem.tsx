@@ -2,8 +2,8 @@ import { useState } from "react";
 import CSS from "csstype";
 
 export interface item {
-  checked: boolean;
   description: string;
+  checked: boolean;
 }
 
 const itemStyle: CSS.Properties = {
@@ -30,8 +30,8 @@ const descriptionStyle: CSS.Properties = {
 };
 
 const TodoItem = (props: item) => {
-  const [checked, setChecked] = useState<boolean>(props.checked);
   const [description, setDescription] = useState<string>(props.description);
+  const [checked, setChecked] = useState<boolean>(props.checked);
 
   const handleCheckBoxClick = () => {
     setChecked(!checked);
