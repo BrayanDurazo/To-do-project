@@ -22,7 +22,7 @@ class ItemViewSet(ViewSet):
     serializer = ItemSerializer
 
     def list(self, request):
-        items_list = self.serializer(self.queryset, many=True)
+        items_list = self.serializer(self.queryset.all(), many=True)
         return Response(items_list.data)
 
     def create(self, request):
@@ -33,12 +33,12 @@ class ItemViewSet(ViewSet):
         return Response(post_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
-        item = get_object_or_404(self.queryset, pk=pk)
+        item = get_object_or_404(self.queryset.all(), pk=pk)
         serialized_item = self.serializer(item)
         return Response(serialized_item.data)
 
     def update(self, request, pk=None):
-        item = get_object_or_404(self.queryset, pk=pk)
+        item = get_object_or_404(self.queryset.all(), pk=pk)
         updated_item = self.serializer(item, data=request.data)
         if updated_item.is_valid():
             updated_item.save()
@@ -46,6 +46,6 @@ class ItemViewSet(ViewSet):
         return Response(updated_item.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):
-        item = get_object_or_404(self.queryset, pk=pk)
+        item = get_object_or_404(self.queryset.all(), pk=pk)
         item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
