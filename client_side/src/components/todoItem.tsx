@@ -2,6 +2,7 @@ import { useState } from "react";
 import CSS from "csstype";
 
 export interface item {
+  id: number,
   description: string;
   checked: boolean;
 }
