@@ -7,6 +7,7 @@ import { useMutation, gql } from '@apollo/client';
 const ADD_ITEM = gql`
   mutation ADD_ITEM {
     item(input: $input) @rest(type: "item", path: "items/", endpoint: "v1", method: "POST") {
+      id
       description
       checked
     }
@@ -63,16 +64,19 @@ const TodoList = (props: todoListProps) => {
       }
     });
 
-    const onAddItemClick = () => {
-      addItem()
-      if (loading) {
-        return <div>Loading...</div>
-      }
+    if (loading) {
+      return <div>Loading...</div>
+    }
+
+    const onAddItemClick = async () => {
+      const { data } = await addItem()
+      const {item: newItem} = data
       setItems([
           ...items,
           {
-            description: "",
-            checked: false,
+            id: newItem.id,
+            description: newItem.description,
+            checked: newItem.checked
           }
       ])
     }
@@ -83,10 +87,10 @@ const TodoList = (props: todoListProps) => {
             <h1>To do list</h1>
         </div>
         <div style={listBodyStyle}>
-            {
-                items.map((item: item) => {
-                    return <TodoItem checked={item.checked} description={item.description} />
-                })
+            {   
+              items.map((item: item) => {
+                  return <TodoItem id={item.id} checked={item.checked} description={item.description} />
+              })
             }
         </div>
         <div style={listFooterStyle}>

@@ -29,7 +29,7 @@ class ItemViewSet(ViewSet):
         post_data = self.serializer(data=request.data)
         if post_data.is_valid():
             post_data.save()
-            return Response(post_data.validated_data, status=status.HTTP_201_CREATED)
+            return Response(post_data.data, status=status.HTTP_201_CREATED)
         return Response(post_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
