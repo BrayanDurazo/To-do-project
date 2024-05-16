@@ -17,8 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from todo.views import ItemViewSet
 from rest_framework.routers import DefaultRouter
+
+from todo.views import ItemViewSet
 
 router = DefaultRouter()
 router.register(r"items", ItemViewSet, basename="item")

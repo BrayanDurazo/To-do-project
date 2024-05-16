@@ -6,8 +6,8 @@ const GET_ITEMS = gql`
     query GET_ITEMS {
         items @rest(type: "item", endpoint: "v1", path: "items/") {
             id
-            checked
             description
+            checked
         }
     }
 `;
