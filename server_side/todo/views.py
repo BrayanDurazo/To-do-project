@@ -39,7 +39,7 @@ class ItemViewSet(ViewSet):
 
     def update(self, request, pk=None):
         item = get_object_or_404(self.queryset.all(), pk=pk)
-        updated_item = self.serializer(item, data=request.data)
+        updated_item = self.serializer(item, data=request.data, partial=True)
         if updated_item.is_valid():
             updated_item.save()
             return Response(updated_item.data, status=status.HTTP_201_CREATED)
