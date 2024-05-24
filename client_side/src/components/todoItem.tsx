@@ -30,6 +30,7 @@ export interface item {
 export interface itemComponent {
   item: item,
   updateItemsList: (item: item) => void
+  removeItemFromList: (item: item) => void
 }
 
 const itemStyle: CSS.Properties = {
@@ -67,7 +68,7 @@ const deleteButtonStyle: CSS.Properties = {
 }
 
 const TodoItem = (props: itemComponent) => {
-  const {item, updateItemsList} = props
+  const {item, updateItemsList, removeItemFromList} = props
   const [description, setDescription] = useState<string>(item.description);
   const [checked, setChecked] = useState<boolean>(item.checked);
   const [updateItem] = useMutation(UPDATE_ITEM);
@@ -126,6 +127,7 @@ const TodoItem = (props: itemComponent) => {
         id: item.id,
       }
     })
+    removeItemFromList(item)
   }
 
   return (

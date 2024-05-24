@@ -74,6 +74,15 @@ const TodoList = (props: todoListProps) => {
       setItems(newItems)
     }
 
+    const removeItemFromList = (updatedItem: item) => {
+      const newItems: item[] = []
+      items.map((item) => {
+        if (item.id !== updatedItem.id)
+          newItems.push(item)
+      })
+      setItems(newItems)
+    }
+
     if (loading) {
       return <div>Loading...</div>
     }
@@ -99,7 +108,7 @@ const TodoList = (props: todoListProps) => {
         <div style={listBodyStyle}>
             {   
               items.map((item: item) => {
-                  return <TodoItem key={item.id} item={item} updateItemsList={updateItemsList}/>
+                  return <TodoItem key={item.id} item={item} updateItemsList={updateItemsList} removeItemFromList={removeItemFromList}/>
               })
             }
         </div>
