@@ -1,10 +1,20 @@
 import { useState } from "react";
 import CSS from "csstype";
 import { useMutation, gql } from '@apollo/client';
+import { TrashIcon } from '../assets/Icons/Icon'
 
 const UPDATE_ITEM = gql`
   mutation UPDATE_ITEM{
     item(id: $id, input: $input) @rest(type: "item", path: "items/{args.id}/", endpoint: "v1", method: "PUT") {
+      id
+      description
+      checked
+    }
+  }
+`
+const DELETE_ITEM = gql`
+  mutation UPDATE_ITEM{
+    item(id: $id) @rest(type: "item", path: "items/{args.id}/", endpoint: "v1", method: "DELETE") {
       id
       description
       checked
@@ -20,6 +30,7 @@ export interface item {
 export interface itemComponent {
   item: item,
   updateItemsList: (item: item) => void
+  removeItemFromList: (item: item) => void
 }
 
 const itemStyle: CSS.Properties = {
@@ -37,6 +48,7 @@ const checkboxStyle: CSS.Properties = {
 
 const descriptionStyle: CSS.Properties = {
   marginLeft: "8px",
+  marginRight: "8px",
   width: "100%",
   height: "24px",
   padding: "0px",
@@ -45,11 +57,22 @@ const descriptionStyle: CSS.Properties = {
   fontSize: "24px",
 };
 
+const deleteButtonStyle: CSS.Properties = {
+  display: "flex",
+  flexDirection: "column",
+  width: "24px",
+  height: "24px",
+  border: "1px solid black",
+  alignItems: "center",
+  justifyContent: "center",
+}
+
 const TodoItem = (props: itemComponent) => {
-  const {item, updateItemsList} = props
+  const {item, updateItemsList, removeItemFromList} = props
   const [description, setDescription] = useState<string>(item.description);
   const [checked, setChecked] = useState<boolean>(item.checked);
   const [updateItem] = useMutation(UPDATE_ITEM);
+  const [deleteItem] = useMutation(DELETE_ITEM);
 
   const sendUpdatedItemToList = () => {
     const newItem = {
@@ -98,15 +121,26 @@ const TodoItem = (props: itemComponent) => {
     sendUpdatedDescription()
   }
 
+  const onDeleteClick = async () => {
+    await deleteItem({
+      variables: {
+        id: item.id,
+      }
+    })
+    removeItemFromList(item)
+  }
+
   return (
     <div style={itemStyle}>
-      <input
-        style={checkboxStyle}
-        type="checkbox"
-        value="checked"
-        checked={checked}
-        onChange={handleCheckBoxClick}
-      ></input>
+      <div>
+        <input
+          style={checkboxStyle}
+          type="checkbox"
+          value="checked"
+          checked={checked}
+          onChange={handleCheckBoxClick}
+        ></input>
+      </div>
       <input
         style={descriptionStyle}
         type="text"
@@ -115,6 +149,12 @@ const TodoItem = (props: itemComponent) => {
         onChange={(e) => handleTextInput(e)}
         onBlurCapture={handleOnBlur}
       ></input>
+      <div>
+        <button  style={deleteButtonStyle} onClick={onDeleteClick}>
+          <TrashIcon></TrashIcon>
+        </button>
+      </div>
+
     </div>
   );
 };
