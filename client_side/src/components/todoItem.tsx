@@ -74,15 +74,6 @@ const TodoItem = (props: itemComponent) => {
   const [updateItem] = useMutation(UPDATE_ITEM);
   const [deleteItem] = useMutation(DELETE_ITEM);
 
-  const sendUpdatedItemToList = () => {
-    const newItem = {
-      id: item.id,
-      description: description,
-      checked: checked
-    }
-    updateItemsList(newItem)
-  }
-
   const sendUpdatedDescription = async () => {
     await updateItem({
       variables: {
@@ -92,7 +83,12 @@ const TodoItem = (props: itemComponent) => {
         }
       }
     })
-    sendUpdatedItemToList()
+    const newItem = {
+      id: item.id,
+      description: description,
+      checked: checked
+    }
+    updateItemsList(newItem)
   }
 
   const sendUpdatedChecked = async (checkedValue: boolean) => {
@@ -104,7 +100,12 @@ const TodoItem = (props: itemComponent) => {
         }
       }
     })
-    sendUpdatedItemToList()
+    const newItem = {
+      id: item.id,
+      description: description,
+      checked: checkedValue
+    }
+    updateItemsList(newItem)
   }
 
   const handleCheckBoxClick = () => {
