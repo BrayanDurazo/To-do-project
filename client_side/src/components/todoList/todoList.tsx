@@ -1,6 +1,6 @@
-import TodoItem from "./todoItem";
+import TodoItem from "../todoItem/todoItem";
 import CSS from "csstype";
-import { item } from "./todoItem";
+import { item } from "../todoItem/todoItem";
 import { useState } from "react";
 import { useMutation, gql } from '@apollo/client';
 

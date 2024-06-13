@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CSS from "csstype";
 import { useMutation, gql } from '@apollo/client';
-import { TrashIcon } from '../assets/Icons/Icon'
+import { TrashIcon } from '../../assets/Icons/Icon'
 
 const UPDATE_ITEM = gql`
   mutation UPDATE_ITEM{

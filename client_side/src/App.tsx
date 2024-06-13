@@ -1,4 +1,4 @@
-import TodoList from "./components/todoList";
+import TodoList from "./components/todoList/todoList";
 import CSS from "csstype";
 import { useQuery, gql } from '@apollo/client';
 
