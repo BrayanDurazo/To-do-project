@@ -140,6 +140,7 @@ const TodoItem = (props: itemComponent) => {
           value="checked"
           checked={checked}
           onChange={handleCheckBoxClick}
+          data-testid={"checkbox-item-" + item.id}
         ></input>
       </div>
       <input
@@ -149,9 +150,14 @@ const TodoItem = (props: itemComponent) => {
         value={description}
         onChange={(e) => handleTextInput(e)}
         onBlurCapture={handleOnBlur}
+        data-testid={"description-item-" + item.id}
       ></input>
       <div>
-        <button  style={deleteButtonStyle} onClick={onDeleteClick}>
+        <button 
+          style={deleteButtonStyle}
+          onClick={onDeleteClick}
+          data-testid={"deleteButton-item-" + item.id}
+        >
           <TrashIcon></TrashIcon>
         </button>
       </div>
