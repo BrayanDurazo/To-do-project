@@ -12,7 +12,7 @@ const UPDATE_ITEM = gql`
     }
   }
 `
-const DELETE_ITEM = gql`
+export const DELETE_ITEM = gql`
   mutation UPDATE_ITEM{
     item(id: $id) @rest(type: "item", path: "items/{args.id}/", endpoint: "v1", method: "DELETE") {
       id
