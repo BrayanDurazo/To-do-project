@@ -1,8 +1,8 @@
-import TodoList from "./components/todoList";
+import TodoList from "./components/todoList/todoList";
 import CSS from "csstype";
 import { useQuery, gql } from '@apollo/client';
 
-const GET_ITEMS = gql`
+export const GET_ITEMS = gql`
     query GET_ITEMS {
         items @rest(type: "item", endpoint: "v1", path: "items/") {
             id

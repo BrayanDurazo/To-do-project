@@ -1,10 +1,10 @@
-import TodoItem from "./todoItem";
+import TodoItem from "../todoItem/todoItem";
 import CSS from "csstype";
-import { item } from "./todoItem";
+import { item } from "../todoItem/todoItem";
 import { useState } from "react";
 import { useMutation, gql } from '@apollo/client';
 
-const ADD_ITEM = gql`
+export const ADD_ITEM = gql`
   mutation ADD_ITEM {
     item(input: $input) @rest(type: "item", path: "items/", endpoint: "v1", method: "POST") {
       id

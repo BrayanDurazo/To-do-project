@@ -1,0 +1,11 @@
+{
+    "bail": 1,
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "setupFiles": ["./jest.setup.ts"],
+    "globals": {
+      "ts-jest": {
+        "tsconfig": "tsconfig.json"
+      }
+    }
+}

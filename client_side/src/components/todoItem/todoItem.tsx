@@ -1,9 +1,9 @@
 import { useState } from "react";
 import CSS from "csstype";
 import { useMutation, gql } from '@apollo/client';
-import { TrashIcon } from '../assets/Icons/Icon'
+import { TrashIcon } from '../../assets/Icons/Icon'
 
-const UPDATE_ITEM = gql`
+export const UPDATE_ITEM = gql`
   mutation UPDATE_ITEM{
     item(id: $id, input: $input) @rest(type: "item", path: "items/{args.id}/", endpoint: "v1", method: "PUT") {
       id
@@ -12,7 +12,7 @@ const UPDATE_ITEM = gql`
     }
   }
 `
-const DELETE_ITEM = gql`
+export const DELETE_ITEM = gql`
   mutation UPDATE_ITEM{
     item(id: $id) @rest(type: "item", path: "items/{args.id}/", endpoint: "v1", method: "DELETE") {
       id
@@ -140,6 +140,7 @@ const TodoItem = (props: itemComponent) => {
           value="checked"
           checked={checked}
           onChange={handleCheckBoxClick}
+          data-testid={"checkbox-item-" + item.id}
         ></input>
       </div>
       <input
@@ -149,9 +150,14 @@ const TodoItem = (props: itemComponent) => {
         value={description}
         onChange={(e) => handleTextInput(e)}
         onBlurCapture={handleOnBlur}
+        data-testid={"description-item-" + item.id}
       ></input>
       <div>
-        <button  style={deleteButtonStyle} onClick={onDeleteClick}>
+        <button 
+          style={deleteButtonStyle}
+          onClick={onDeleteClick}
+          data-testid={"deleteButton-item-" + item.id}
+        >
           <TrashIcon></TrashIcon>
         </button>
       </div>
